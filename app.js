@@ -2,7 +2,11 @@ $(document).ready(function() {
     hsp.init({
 		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
 		 receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
-        useTheme: true
+        useTheme: true,
+        callBack: function (message) {
+                    alert('Got response from HootSuit');
+                    console.log('Error: ' + message);
+                }
     });
 
     $('._message_send').click(function(){
