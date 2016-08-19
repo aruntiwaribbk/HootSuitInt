@@ -1,6 +1,7 @@
 $(document).ready(function() {
     hsp.init({
 		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
+		 receiverPath: 'http://hootsuitintegration.paperplane.io/my_receiver.html',
         useTheme: true
     });
 
