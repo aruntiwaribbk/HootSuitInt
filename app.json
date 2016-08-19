@@ -1,0 +1,15 @@
+{
+  "name": "HootSuitInt",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
