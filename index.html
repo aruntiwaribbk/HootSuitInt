@@ -1,51 +1,126 @@
-﻿
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Hootsuite Demo App</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
+        <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
+        
+        <script src="template.js"></script>
+        <script src="app.js"></script>
+    </head>
 
+    <body>
+      <div class="hs_stream">
+        <!--Top Bar-->
+        <div class="hs_topBar">
+            <div class="hs_topBarContent">
+                <!--Right-Side Controls-->
+                <ul class="hs_topBarControls">
+                    <li class="hs_topBarControlsBtn" data-dropdown="WriteMessage" title="Write Message">
+                        <span class="icon-app-dir x-compose"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="Search" title="Search">
+                        <span class="icon-app-dir x-search"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="Settings" title="Settings">
+                        <span class="icon-app-dir x-settings"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="MenuList" title="More">
+                        <span class="icon-app-dir x-ellipsis"></span>
+                    </li>
+                </ul>
 
-
-  <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/0-6/hsp.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
-
-   
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-           
-            hsp.init({
-                apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
-                useTheme: true,
-                callBack: function (message) {
-                    alert(1);
-                    console.log('Error: ' + message);
-                }
-            });
-
-          
-          
-            $(document).on('click', '.hs_message', function (e) {
-
-             
-                alert(2);
-                hsp.composeMessage("Test HootSuit API", { shortenLinks: true });
-            });
-        });
-    </script>
-     
-    
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-        <div>
-         
+                <!--Left-Side Title-->
+                <h1 class="hs_topBarTitle">Demo App</h1>
             </div>
-        <div>
-       Comment:
-    <input type="text" id="txtComment" />
-         <button class="hs_message">Send</button>
+
+            <!--Drop Downs-->
+            <!--Write Message-->
+            <div class="hs_topBarDropdown hs_dropdownWriteMessage" data-dropdown="WriteMessage" style="display: none;">
+                <button class="hs_btnCtaSml hs_btnTypeSubmit _message_send">Send</button>
+                <div class="hs_searchWrapper">
+                    <label class="hs_isVisuallyHidden" for="hs_writeMessageInputExample">Search:</label>
+                    <input id="hs_writeMessageInputExample" class="_message_text" type="text" placeholder="write something...">
+                </div>
             </div>
-    </div>
-    </form>
-</body>
+
+            <!--Search-->
+            <div class="hs_topBarDropdown hs_dropdownSearch" data-dropdown="Search">
+                <button class="hs_btnCtaSml hs_btnTypeSubmit _user_search">Search</button>
+                <div class="hs_searchWrapper">
+                    <label class="hs_isVisuallyHidden" for="hs_searchInputExample">Search:</label>
+                    <input id="hs_searchInputExample" class="_user_text" type="text" placeholder="e.g. Hootsuite">
+                </div>
+            </div>
+
+            <div class="hs_topBarDropdown hs_dropdownSettings" data-dropdown="Settings">
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 1</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 2</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 3</a></li>
+            </div>
+
+            <!--Menu List-->
+            <ul class="hs_topBarDropdown hs_dropdownMenuList" data-dropdown="MenuList">
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 1</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 2</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 3</a></li>
+            </ul>
+        </div>
+
+        <!--Message Stream-->
+        <div class="hs_message">
+            <div class="hs_avatar">
+                <img class="hs_avatarImage" src="./asset/avatar.png" alt="Avatar">
+                <a href="#" class="hs_avatarLink" title="Username"></a>
+            </div>
+
+            <div class="hs_content">
+                <a href="#" class="hs_userName" title="Username">Hootsuite</a>
+                <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">1 minute ago</a>
+
+                <div class="hs_contentText">
+                <p>
+                    Let's start by telling the Dashboard to do some stuff for us:<br />
+                    <a href="#" class='_retweet'>reweet</a>&nbsp;&nbsp;
+                    <a href="#" class='_showStatusMessage'>showStatusMessage</a>&nbsp;&nbsp;
+                    <a href="#" class='_clearStatusMessage'>clearStatusMessage</a>&nbsp;&nbsp;
+                    <a href="#" class='_showFollowDialog'>showFollowDialog</a>&nbsp;&nbsp;
+                    <a href="#" class='_customUserInfo'>customUserInfo</a>&nbsp;&nbsp;
+                    <a href="#" class='_showImagePreview'>showImagePreview</a>&nbsp;&nbsp;
+                    <a href="#" class='_updatePlacementSubtitle'>updatePlacementSubtitle</a>&nbsp;&nbsp;
+                    <a href="#" class='_showCustomPopup'>showCustomPopup</a>&nbsp;&nbsp;
+                    <br />
+                    <!--Optional Image-->
+                    <div class="hs_mediaGallery">
+                        <a class="hs_attachedMedia" href="#">
+                            <!--Single images are cropped to a 16:9 ratio-->
+                            <img src="./asset/holiday-owl.jpg" alt="Sample Image" class="hs_isProcessed _showImagePreview">
+                        </a>
+                    </div>
+                    <br />
+                    Click <a href="https://hootsuite.s3.amazonaws.com/jsapi/1-0/app_stream_template.html" target="_blank">this link</a> to explore more about our free CSS theme for apps
+                </p>
+            </div>
+          </div>
+        </div>
+
+        <!--Basic Message-->
+        <div class="hs_message">
+            <div class="hs_avatar">
+                <img class="hs_avatarImage" src="./asset/avatar.png" alt="Avatar">
+                <a href="#" class="hs_avatarLink" title="Username"></a>
+            </div>
+
+            <div class="hs_content">
+                <a href="#" class="hs_userName" title="Username">Hootsuite</a>
+                <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">2 minute ago</a>
+
+                <div class="hs_contentText">
+                    <p>Welcome to Hootsuite Demo App! In this app, you can try and experience all the functions Hootsuite Appdirectory SDK has to offer...</p>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
