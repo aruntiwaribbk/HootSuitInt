@@ -23,16 +23,16 @@ $(document).ready(function() {
     });
 
     $('._retweet').click(function(){
-		alert($('#hs_RetweetInputExample').val());
+		
 		if($('#hs_RetweetInputExample').val()=='')
 		{
-			alert(2);
+			
 			alert('Please enter tweet id you want to retweet.');
-			$('.hs_RetweetInputExample').focus();
+			$('#hs_RetweetInputExample').focus();
 		}
 		else
-		{alert(3);
-			 hsp.retweet($('#hs_RetweetInputExample').val());
+		{
+			 hsp.retweet('+$('#hs_RetweetInputExample').val()+');
 		}
        
 		
