@@ -1,852 +1,126 @@
 <!DOCTYPE html>
-<!--[if IE 8]>     <html class="ie ie8 lte9 lte8"> <![endif]-->
-<!--[if IE 9]>     <html class="ie ie9 lte9"> <![endif]-->
-<!--[if gt IE 9]>  <html> <![endif]-->
-<!--[if !IE]><!-->
-<html><!--<![endif]--><head>
-  <!--
-      Hootsuite API JS Library
-      This App stream template shows how elements and class names should be used in order to maintain a consistent UI across Hootsuite.
-
-      NOTE: This template contains all possible elements at once. Re-use only what you need and
-            read the in-line comments API documentation: https://sites.google.com/site/hootsuiteappdevelopers/jsapi
-    -->
-
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>App Stream Template</title>
-
-  <link type="text/css" rel="stylesheet" href="App%20Stream%20Template_files/ad_default.css">
-
-<script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Hootsuite Demo App</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
+        <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
+        
+        <script src="template.js"></script>
+        <script src="app.js"></script>
+    </head>
 
-  <script>
-    $(document).ready(function() {
-      /**
-       * 1. To prevent conflicts, run hsp.init() either before including jQuery or in $(document).ready().
-       * 2. In order for hsp.bind() and hsp.updatePlacementSubtitle() to work, you need to set up an
-       *    App Receiver and provide its absolute URL in the receiverPath parameter.
-       *    See https://sites.google.com/site/hootsuiteappdevelopers/jsapi
-       */
+    <body>
+      <div class="hs_stream">
+        <!--Top Bar-->
+        <div class="hs_topBar">
+            <div class="hs_topBarContent">
+                <!--Right-Side Controls-->
+                <ul class="hs_topBarControls">
+                    <li class="hs_topBarControlsBtn" data-dropdown="WriteMessage" title="Write Message">
+                        <span class="icon-app-dir x-compose"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="Search" title="Search">
+                        <span class="icon-app-dir x-search"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="Settings" title="Settings">
+                        <span class="icon-app-dir x-settings"></span>
+                    </li>
+                    <li class="hs_topBarControlsBtn" data-dropdown="MenuList" title="More">
+                        <span class="icon-app-dir x-ellipsis"></span>
+                    </li>
+                </ul>
 
-hsp.init({
-		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
-        useTheme: true
-    });
-
-  hsp.bind('sendcomposedmsgtoapp', function(message){
-        console.log('received composed message:', message);
-    });
-//
-//      hsp.bind('refresh', function() {
-//        window.location.reload();
-//      });
-
-      /**
-       * Ensure images fill their container's dimensions
-       * This should be called on all media gallery images once they have loaded
-       */
-      $('.hs_mediaGallery img:not(".hs_isProcessed")').one('load', function () {
-        var $this = $(this);
-        var $parent = $this.parent();
-        var containerW = $parent.outerWidth();
-        var containerH = $parent.outerHeight();
-        var containerAspect = containerW / containerH;
-        var imageAspect = $this.width() / $this.height();
-
-        if (containerAspect < imageAspect) {
-          $this.addClass('hs_reverseImageScaling');
-        }
-
-        // Do not process this image on subsequent checks
-        $this.addClass('hs_isProcessed');
-      }).each(function() {
-        if (this.complete) $(this).load();
-      });
-
-      // Message controls drop down
-      $('.hs_stream').on('click', '.hs_message .hs_messageOptions .hs_messageDropDownBtn', function (e) {
-        e.preventDefault();
-        $(this).parent().find('.hs_moreOptionsMenu').toggle();
-      });
-
-      $('.hs_stream').on('mouseleave', '.hs_message .hs_messageOptions .hs_moreOptionsMenu', function () {
-        $(this).hide();
-      });
-
-      // Comment entry box
-      var $commentContentText = $('.hs_commentContentText');
-      var $commentEntryArea = $('.hs_commentEntryArea');
-
-      $commentEntryArea.val($commentEntryArea.data('placeholder'))
-        .on('focus', function () {
-          $commentContentText.toggleClass('hasFocus');
-
-          if ($commentEntryArea.val() === $commentEntryArea.data('placeholder')) {
-            $commentEntryArea.val('');
-          }
-        }).on('blur', function () {
-          $commentContentText.toggleClass('hasFocus');
-
-          if ($commentEntryArea.val() === '') {
-            $commentEntryArea.val($commentEntryArea.data('placeholder'));
-          }
-        });
-
-      // Top bar controls and drop downs
-      $('.hs_topBarControlsBtn').click(function(e) {
-        e.preventDefault();
-
-        var $this = $(this);
-        var $previousButton = $('.hs_topBarControlsBtn').filter('.active');
-        var $previousDropdown = $('.hs_topBarDropdown').filter('.active');
-        var dropdownDataValue = $this.data('dropdown');
-        var previousDropdownDataValue = '';
-
-        // Hide the previous drop down
-        if ($previousDropdown.length) {
-          previousDropdownDataValue = $previousDropdown.data('dropdown');
-          $previousDropdown.hide().removeClass('active');
-          $previousButton.removeClass('active');
-        }
-
-        // Show the drop down associated with the clicked control button
-        if (dropdownDataValue !== previousDropdownDataValue) {
-          var $currentDropdown = $('.hs_dropdown' + dropdownDataValue);
-
-          $this.addClass('active');
-          $currentDropdown.addClass('active').show();
-
-          if (dropdownDataValue == 'Search' || dropdownDataValue == 'WriteMessage') {
-            $currentDropdown.find('input[type="text"]').first().focus();
-          }
-        }
-      });
-
-      // Demo functionality
-      $('.demo_user_info').click(function (e) {
-        e.preventDefault();
-
-       $('._customUserInfo').click(function(){
-        hsp.customUserInfo({
-          "fullName": "arun",
-          "screenName": "@arun22755309",
-          "avatar": "https://d1cmhiswqj5a7e.cloudfront.net/http%3A%2F%2Fplacehold.it%2F30x30%2F444",
-          "profileUrl": "https://twitter.com/arun22755309",
-          "userLocation": "India",
-          "bio": ".Net Developer",
-          "extra": [
-            {"label": "Age", "value": "Unknown"},
-            {"label": "Gender", "value": "Male"}
-          ],
-          "links": [
-            {"label": "Hootsuite", "url": "https://hootsuite.com"},
-            {"label": "Blog", "url": "https://blog.hootsuite.com"}
-          ]
-        });
-    });
-
-      $(document).on('click', '.hs_message .hs_messageOptions .x-reply', function (e) {
-        e.preventDefault();
-
-        hsp.composeMessage('pre-defined message text');
-      });
-    });});
-  </script>
-</head>
-
-<body>
-  <div class="hs_stream">
-    <!--Top Bar-->
-    <div class="hs_topBar">
-      <div class="hs_topBarContent">
-        <!--Right-Side Controls-->
-        <ul class="hs_topBarControls">
-          <li class="hs_topBarControlsBtn" data-dropdown="WriteMessage" title="Write Message">
-            <span class="icon-app-dir x-compose"></span>
-          </li>
-          <li class="hs_topBarControlsBtn" data-dropdown="Search" title="Search">
-            <span class="icon-app-dir x-search"></span>
-          </li>
-          <li class="hs_topBarControlsBtn" data-dropdown="Settings" title="Settings">
-            <span class="icon-app-dir x-settings"></span>
-          </li>
-          <li class="hs_topBarControlsBtn" data-dropdown="MenuList" title="More">
-            <span class="icon-app-dir x-ellipsis"></span>
-          </li>
-        </ul>
-
-        <!--Left-Side Title-->
-        <h1 class="hs_topBarTitle">Top bar</h1>
-      </div>
-
-      <!--Drop Downs-->
-      <!--Write Message-->
-      <div class="hs_topBarDropdown hs_dropdownWriteMessage" data-dropdown="WriteMessage">
-        <button class="hs_btnCtaSml hs_btnTypeSubmit">Send</button>
-        <div class="hs_searchWrapper">
-          <label class="hs_isVisuallyHidden" for="hs_writeMessageInputExample">Search:</label>
-          <input id="hs_writeMessageInputExample" type="text">
-        </div>
-      </div>
-
-      <!--Search-->
-      <div class="hs_topBarDropdown hs_dropdownSearch" data-dropdown="Search">
-        <button class="hs_btnCtaSml hs_btnTypeSubmit">Search</button>
-        <div class="hs_searchWrapper">
-          <label class="hs_isVisuallyHidden" for="hs_searchInputExample">Search:</label>
-          <input id="hs_searchInputExample" type="text">
-        </div>
-      </div>
-
-      <!--Settings-->
-      <div class="hs_topBarDropdown hs_dropdownSettings" data-dropdown="Settings">
-        <a class="hs_settingsLink" href="#">Settings Link</a>
-        <label for="hs_settingsCheckboxExample" class="hs_title">
-          <input id="hs_settingsCheckboxExample" type="checkbox"> Setting 1
-        </label>
-        <button class="hs_btnCtaSml hs_btnTypeSubmit">Save</button>
-      </div>
-
-      <!--Menu List-->
-      <ul class="hs_topBarDropdown hs_dropdownMenuList" data-dropdown="MenuList">
-        <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 1</a></li>
-        <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 2</a></li>
-        <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 3</a></li>
-      </ul>
-    </div>
-
-    <!--Basic Message-->
-    <div class="hs_message">
-      <div class="hs_messageOptions">
-        <!--
-          NOTE: Do not show more than 4 icons; use the drop down if you need 5 or more
-                "Share" links should open the Compose Message dialog in the Hootsuite dashboard via hsp.composeMessage()
-        -->
-        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-        <button class="hs_messageOptionsBtn icon-app-dir x-retweet" title="Retweet"></button>
-        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-
-        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-        <div class="hs_moreOptionsMenu">
-          <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-          <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
-        </div>
-      </div>
-
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime hs_isNewMessage" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>This is an example of a basic message, which consists of a small text block and a <a href="#">link</a>. The new comment indicator (blue dot) should be displayed when the comment is newly added to the stream</p>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">2 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Assigned Basic Message-->
-    <div class="hs_message hs_message_assigned">
-
-      <div class="hs_assignment _messageAssignment">
-        <span class="icon-app-dir x-assigned-on"></span>
-        <span class="notes _notes">Message assigned to <b>Joe Ying</b></span>
-        </div>
-
-      <div class="hs_messageOptions">
-        <!--
-          NOTE: Do not show more than 4 icons; use the drop down if you need 5 or more
-                "Share" links should open the Compose Message dialog in the Hootsuite dashboard via hsp.composeMessage()
-        -->
-        <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-        <button class="hs_messageOptionsBtn icon-app-dir x-retweet" title="Retweet"></button>
-        <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-
-        <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-        <div class="hs_moreOptionsMenu">
-          <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-          <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
-          <a class="hs_moreOptionsMenuItem" href="#"><span class="icon-app-dir x-assigned"></span>Assign</a>
-          <a class="hs_moreOptionsMenuItem" href="#"><span class="icon-app-dir x-resolved"></span>Resolve</a>
-        </div>
-      </div>
-
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime hs_isNewMessage" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>This is an example of a basic message being assigned</p>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">2 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Message Stream-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <!--
-          NOTE: Clicking on a username or avatar should open the user's bio via hsp.customUserInfo()
-                or hsp.showUser(twitterHandle) for Twitter users
-        -->
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>A message stream expands the basic message and includes an 
-optional image, as well as a comments section. Comments are displayed in
- reverse chronological order below the post. A maximum of 4 most recent 
-comments are displayed with the rest exposed by clicking "View previous 
-comments". <a href="#" class="demo_user_info">This link</a> opens a user info popup when called from within the dashboard.</p>
-
-          <!--Optional Image-->
-          <div class="hs_mediaGallery">
-            <a class="hs_attachedMedia" href="#">
-              <!--Single images are cropped to a 16:9 ratio-->
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_004.png" alt="Sample Image">
-            </a>
-          </div>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">20 comments</a></li>
-        </ul>
-      </div>
-
-      <div class="hs_comments">
-        <div class="hs_commentsHeader">
-          <span class="hs_commentsCounter">4 of 20</span>
-          <a class="hs_commentsViewPrevious" href="#"><span class="icon-app-dir x-comment"></span>View previous comments</a>
-        </div>
-
-        <!--First Comment-->
-        <div class="hs_comment">
-          <div class="hs_messageOptions">
-            <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-            <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-
-            <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-            <div class="hs_moreOptionsMenu">
-              <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-              <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+                <!--Left-Side Title-->
+                <h1 class="hs_topBarTitle">Demo App</h1>
             </div>
-          </div>
 
-          <div class="hs_commentAvatar">
-            <img class="hs_commentAvatarImage" src="App%20Stream%20Template_files/httpplacehold_002.png" alt="Avatar">
-            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
-          </div>
+            <!--Drop Downs-->
+            <!--Write Message-->
+            <div class="hs_topBarDropdown hs_dropdownWriteMessage" data-dropdown="WriteMessage" style="display: none;">
+                <button class="hs_btnCtaSml hs_btnTypeSubmit _message_send">Send</button>
+                <div class="hs_searchWrapper">
+                    <label class="hs_isVisuallyHidden" for="hs_writeMessageInputExample">Search:</label>
+                    <input id="hs_writeMessageInputExample" class="_message_text" type="text" placeholder="write something...">
+                </div>
+            </div>
 
-          <div class="hs_commentContent">
-            <a href="#" class="hs_commentUserName" title="Username">Username One</a>
-            <a href="#" class="hs_commentPostTime hs_isNewMessage" target="_blank" title="Sunday, September 14 2014 at 12:10pm via Hootsuite">Less than a min ago</a>
+            <!--Search-->
+            <div class="hs_topBarDropdown hs_dropdownSearch" data-dropdown="Search">
+                <button class="hs_btnCtaSml hs_btnTypeSubmit _user_search">Search</button>
+                <div class="hs_searchWrapper">
+                    <label class="hs_isVisuallyHidden" for="hs_searchInputExample">Search:</label>
+                    <input id="hs_searchInputExample" class="_user_text" type="text" placeholder="e.g. Hootsuite">
+                </div>
+            </div>
 
-            <div class="hs_commentContentText">
-              <p>The new comment indicator (blue dot) should be displayed when the comment is newly added to the stream</p>
+            <div class="hs_topBarDropdown hs_dropdownSettings" data-dropdown="Settings">
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 1</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 2</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Setting 3</a></li>
+            </div>
+
+            <!--Menu List-->
+            <ul class="hs_topBarDropdown hs_dropdownMenuList" data-dropdown="MenuList">
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 1</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 2</a></li>
+                <li class="hs_dropdownMenuListItem"><a href="#">Drop Down Link 3</a></li>
+            </ul>
+        </div>
+
+        <!--Message Stream-->
+        <div class="hs_message">
+            <div class="hs_avatar">
+                <img class="hs_avatarImage" src="avatar.png" alt="Avatar">
+                <a href="#" class="hs_avatarLink" title="Username"></a>
+            </div>
+
+            <div class="hs_content">
+                <a href="#" class="hs_userName" title="Username">Hootsuite</a>
+                <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">1 minute ago</a>
+
+                <div class="hs_contentText">
+                <p>
+                    Let's start by telling the Dashboard to do some stuff for us:<br />
+                    <a href="#" class='_retweet'>reweet</a>&nbsp;&nbsp;
+                    <a href="#" class='_showStatusMessage'>showStatusMessage</a>&nbsp;&nbsp;
+                    <a href="#" class='_clearStatusMessage'>clearStatusMessage</a>&nbsp;&nbsp;
+                    <a href="#" class='_showFollowDialog'>showFollowDialog</a>&nbsp;&nbsp;
+                    <a href="#" class='_customUserInfo'>customUserInfo</a>&nbsp;&nbsp;
+                    <a href="#" class='_showImagePreview'>showImagePreview</a>&nbsp;&nbsp;
+                    <a href="#" class='_updatePlacementSubtitle'>updatePlacementSubtitle</a>&nbsp;&nbsp;
+                    <a href="#" class='_showCustomPopup'>showCustomPopup</a>&nbsp;&nbsp;
+                    <br />
+                    <!--Optional Image-->
+                    <div class="hs_mediaGallery">
+                        <a class="hs_attachedMedia" href="#">
+                            <!--Single images are cropped to a 16:9 ratio-->
+                            <img src="holiday-owl.jpg" alt="Sample Image" class="hs_isProcessed _showImagePreview">
+                        </a>
+                    </div>
+                    <br />
+                    Click <a href="https://hootsuite.s3.amazonaws.com/jsapi/1-0/app_stream_template.html" target="_blank">this link</a> to explore more about our free CSS theme for apps
+                </p>
             </div>
           </div>
         </div>
 
-        <!--Second Comment-->
-        <div class="hs_comment">
-          <div class="hs_messageOptions">
-            <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-            <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-
-            <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-            <div class="hs_moreOptionsMenu">
-              <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-              <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
+        <!--Basic Message-->
+        <div class="hs_message">
+            <div class="hs_avatar">
+                <img class="hs_avatarImage" src="avatar.png" alt="Avatar">
+                <a href="#" class="hs_avatarLink" title="Username"></a>
             </div>
-          </div>
 
-          <div class="hs_commentAvatar">
-            <img class="hs_commentAvatarImage" src="App%20Stream%20Template_files/httpplacehold_002.png" alt="Avatar">
-            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
-          </div>
+            <div class="hs_content">
+                <a href="#" class="hs_userName" title="Username">Hootsuite</a>
+                <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">2 minute ago</a>
 
-          <div class="hs_commentContent">
-            <a href="#" class="hs_commentUserName" title="Username">Username Two</a>
-            <a href="#" class="hs_commentPostTime hs_isNewMessage" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-            <div class="hs_commentContentText">
-              <p>Another example of a new comment</p>
+                <div class="hs_contentText">
+                    <p>Welcome to Hootsuite Demo App! In this app, you can try and experience all the functions Hootsuite Appdirectory SDK has to offer...</p>
+                </div>
             </div>
-          </div>
         </div>
-
-        <!--Third comment-->
-        <div class="hs_comment">
-          <div class="hs_messageOptions">
-            <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-            <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-
-            <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-            <div class="hs_moreOptionsMenu">
-              <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-              <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
-            </div>
-          </div>
-
-          <div class="hs_commentAvatar">
-            <img class="hs_commentAvatarImage" src="App%20Stream%20Template_files/httpplacehold_002.png" alt="Avatar">
-            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
-          </div>
-
-          <div class="hs_commentContent">
-            <a href="#" class="hs_commentUserName" title="Username">Username Three</a>
-            <a href="#" class="hs_commentPostTime" target="_blank" title="Sunday, September 14 2014 at 11:10pm via Hootsuite">1 hour ago</a>
-
-            <div class="hs_commentContentText">
-              <p>Older comments do not display the indicator</p>
-            </div>
-          </div>
-        </div>
-
-        <!--Fourth comment-->
-        <div class="hs_comment">
-          <div class="hs_messageOptions">
-            <button class="hs_messageOptionsBtn icon-app-dir x-favorite" title="Like/Unlike"></button>
-            <button class="hs_messageOptionsBtn icon-app-dir x-reply" title="Reply"></button>
-
-            <button class="hs_messageOptionsBtn hs_messageDropDownBtn icon-app-dir x-ellipsis"></button>
-
-            <div class="hs_moreOptionsMenu">
-              <a class="hs_moreOptionsMenuItem _replyAll" href="#"><span class="icon-app-dir x-reply-all"></span>Reply All</a>
-              <a class="hs_moreOptionsMenuItem _sendToEmail" href="#"><span class="icon-app-dir x-email"></span>Send to Email</a>
-            </div>
-          </div>
-
-          <div class="hs_commentAvatar">
-            <img class="hs_commentAvatarImage" src="App%20Stream%20Template_files/httpplacehold_002.png" alt="Avatar">
-            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
-          </div>
-
-          <div class="hs_commentContent">
-            <a href="#" class="hs_commentUserName" title="Username">Username Four</a>
-            <a href="#" class="hs_commentPostTime" target="_blank" title="Sunday, September 14 2014 at 9:10pm via Hootsuite">3 hours ago</a>
-
-            <div class="hs_commentContentText">
-              <p>Here's a final comment, which includes a <a href="#">link</a></p>
-            </div>
-          </div>
-        </div>
-
-        <!--Add a comment-->
-        <div class="hs_comment">
-          <div class="hs_commentAvatar">
-            <img class="hs_commentAvatarImage" src="App%20Stream%20Template_files/httpplacehold.png" alt="Avatar">
-            <a href="#" class="hs_commentAvatarLink" title="Username"></a>
-          </div>
-
-          <div class="hs_commentContent">
-            <div class="hs_commentContentText">
-              <textarea class="hs_commentEntryArea" data-placeholder="Add a comment..." title="Press enter ↵ to submit">Add a comment...</textarea>
-              <div class="hs_commentActions">
-                <a class="hs_btnCtaSml hs_btnTypeSubmit" href="#">Add</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Message with 1 Image-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>Single images are centred and cropped within a 16:9 ratio container, and have a maximum width of 400px</p>
-
-          <div class="hs_mediaGallery">
-            <a class="hs_attachedMedia" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_004.png" alt="Sample Image">
-            </a>
-          </div>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">18 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Message with 2 Images-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 13 2014 at 12:00pm via Hootsuite">1 day ago</a>
-
-        <div class="hs_contentText">
-          <p>Two images are displayed side-by-side and cropped within a 16:9 ratio container</p>
-
-          <div class="hs_mediaGallery media2Item">
-            <a class="hs_attachedMedia hs_attachedMedia1" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia2" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-          </div>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">18 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Message with 3 Images-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>The first of three images takes up 100% of the height, the 
-other two are stacked to the right of it. The three images are cropped 
-within a 16:9 ratio container</p>
-
-          <div class="hs_mediaGallery media3Item">
-            <a class="hs_attachedMedia hs_attachedMedia1" href="#">
-              <img class="hs_reverseImageScaling hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_011.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia2" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_005.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia3" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_009.png" alt="Sample Image">
-            </a>
-          </div>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">18 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Message with 4 Images-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 13 2014 at 12:00pm via Hootsuite">1 day ago</a>
-
-        <div class="hs_contentText">
-          <p>The four images are all the same size and cropped within a 16:9 ratio container</p>
-
-          <div class="hs_mediaGallery media4Item">
-            <a class="hs_attachedMedia hs_attachedMedia1" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia2" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia3" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-            <a class="hs_attachedMedia hs_attachedMedia4" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_003.png" alt="Sample Image">
-            </a>
-          </div>
-        </div>
-
-        <ul class="hs_metrics">
-          <li class="hs_metricsItem"><a href="#">9 likes</a></li>
-          <li class="hs_metricsItem"><a href="#">18 comments</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Link Previews-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>Link Preview objects should be clickable and open the specified URL in a new tab</p>
-
-          <a href="#" target="_blank" class="hs_mediaGallery hs_postAttachment">
-            <div class="hs_attachedMedia" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_004.png" alt="Sample Image">
-            </div>
-            <span class="hs_postTitle">This is an example of a post preview title</span>
-            <span class="hs_postUrl">www.examplepreviewlink.com</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!--Connection Updates-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 13 2014 at 12:00pm via Hootsuite">1 day ago</a>
-
-        <div class="hs_contentText">
-          <p><a href="#">Username</a> is now connected to <a href="#">Another Person</a></p>
-
-          <a href="#" target="_blank" class="hs_mediaGallery hs_postAttachment hs_connection">
-            <div class="hs_attachedMedia" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_010.png" alt="Sample Image">
-              <div class="hs_connectionInset"></div>
-            </div>
-            <span class="hs_postTitle">Another Person</span>
-            <span class="hs_postCaption">This is an example of a connection update caption</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!--Video Site Links-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 14 2014 at 12:00pm via Hootsuite">10 mins ago</a>
-
-        <div class="hs_contentText">
-          <p>Video Site Link objects should be clickable and open the specified URL in a new tab</p>
-
-          <a href="#" target="_blank" class="hs_mediaGallery hs_postAttachment hs_videoSiteLink">
-            <div class="hs_attachedMedia" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_012.png" alt="Sample Image">
-            </div>
-            <span class="hs_postTitle">Video Site Link Title</span>
-            <span class="hs_postUrl">youtu.be/xyz123</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!--Direct Video Embeds-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_007.png" alt="Avatar">
-        <a href="#" class="hs_avatarLink" title="Username"></a>
-      </div>
-
-      <div class="hs_content">
-        <!--Content Controls: See Basic Message-->
-        <!--<div class="hs_contentControls">...</div>-->
-
-        <a href="#" class="hs_userName" title="Username">Username</a>
-        <a href="#" class="hs_postTime" target="_blank" title="Sunday, September 13 2014 at 12:00pm via Hootsuite">1 day ago</a>
-
-        <div class="hs_contentText">
-          <p>It is recommended that Direct Video objects open a new modal, where the video object is embedded and played</p>
-
-          <a href="#" target="_blank" class="hs_mediaGallery hs_postAttachment hs_videoDirect">
-            <div class="hs_attachedMedia" href="#">
-              <img class="hs_isProcessed" src="App%20Stream%20Template_files/httpplacehold_008.png" alt="Sample Image">
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!--Button, Form and Icon Styles-->
-    <div class="hs_message">
-      <div class="hs_avatar">
-        <img class="hs_avatarImage" src="App%20Stream%20Template_files/httpplacehold_006.png" alt="Avatar">
-      </div>
-
-      <div class="hs_content">
-        <div class="hs_contentText">
-          <h2 class="hs_demoSection">Available Button Styles:</h2>
-          <div class="hs_demoContent">
-            <button class="hs_btnCtaSml hs_btnTypeCta hs_btnDisabled">Disabled</button>
-            <button class="hs_btnCtaSml hs_btnTypeDelete">Delete</button>
-            <button class="hs_btnCtaSml hs_btnTypeSubmit">Submit</button>
-            <button class="hs_btnCtaSml hs_btnTypeCta">CTA</button>
-          </div>
-          <div class="hs_demoContent">
-            <button class="hs_btnCtaLrg hs_btnTypeCta hs_demo">Large Call to Action</button>
-          </div>
-
-          <h2 class="hs_demoSection">Available Form Styles:</h2>
-          <div class="hs_demoContent">
-            <label class="hs_label hs_demoLabel" for="demoInputHint">Label for Input </label>
-            <input id="demoInputHint" class="hs_demoInput" value="Hint text" type="text">
-            <input id="demoInputPassword" class="hs_demoInput" value="password123" type="password">
-            <input id="demoInputUserText" class="hs_demoInput" value="User typed text" type="text">
-            <input id="demoInputFocus" class="hs_demoInput" value="Input focus" type="text">
-
-            <label class="hs_label hs_demoLabel" for="demoInputHint2">Label for Input (Text Below)</label>
-            <input id="demoInputHint2" class="hs_demoInput" value="Hint text" type="text">
-            <p class="hs_subDesc">Description text for the above input field. This may be a help tip or provide other supplemental info.</p>
-
-            <label class="hs_label hs_demoLabel" for="demoInputHint3">Label for Input (Text Above)</label>
-            <p class="hs_supDesc">Description text for the input field below. This may be a help tip or provide other supplemental info.</p>
-            <input id="demoInputHint3" class="hs_demoInput" value="Hint text" type="text">
-
-            <select>
-              <option selected="selected" value="option1">Demo Option One</option>
-              <option value="option2">Demo Option Two</option>
-              <option value="option3">Demo Option Three</option>
-            </select>
-          </div>
-
-          <h2 class="hs_demoSection">Available Icon Styles:</h2>
-          <ul class="hs_demoContent hs_demoIconStyles">
-            <li class="hs_demoIcon"><span class="icon-app-dir x-angle-down"></span>Angle Down</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-angle-left"></span>Angle Left</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-angle-right"></span>Angle Right</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-angle-up"></span>Angle Up</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-approve"></span>Approve</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-assigned"></span>Assigned</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-assigned-on"></span>Assigned On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-attach"></span>Attach</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-award"></span>Award</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-block"></span>Block</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-block-on"></span>Block On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-clear"></span>Clear</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-comment"></span>Comment</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-compose"></span>Compose</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-direct-message"></span>Direct Message</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-download"></span>Download</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-edit"></span>Edit</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-ellipsis"></span>Ellipsis</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-email"></span>Email</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-favorite-on"></span>Favorite On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-favorite"></span>Favorite Off</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-filter"></span>Filter</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-follow"></span>Follow</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-grid"></span>Grid</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-heart-on"></span>Heart On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-heart"></span>Heart</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-like-on"></span>Like On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-like"></span>Like</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-list"></span>List</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-location"></span>Location</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-plus"></span>Plus</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-privacy"></span>Privacy</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-reply-all"></span>Reply All</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-reply"></span>Reply</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-retweet"></span>Retweet</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-resolved"></span>Resolved</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-resolved-on"></span>Resolved On</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-rss"></span>RSS</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-save"></span>Save</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-schedule"></span>Schedule</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-search"></span>Search</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-settings"></span>Settings</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-stats"></span>Stats</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-streams"></span>Streams</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-tag"></span>Tag</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-targeting"></span>Targeting</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-trash"></span>Trash</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-unfollow"></span>Unfollow</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-upgrade"></span>Upgrade</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-upload"></span>Upload</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-user"></span>User</li>
-            <li class="hs_demoIcon"><span class="icon-app-dir x-webcam"></span>Webcam</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div><!-- .hs_stream -->
-
-  <!-- Load More Link -->
-  <!--
-    NOTE: This should be triggered automatically when the scroll position nears
-          the bottom of the stream
-  -->
-  <div class="hs_messageMore"></div>
-
-
-</body></html>
+    </body>
+</html>
