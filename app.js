@@ -9,7 +9,7 @@ $(document).ready(function() {
                 }
     });
 	
-	hsp.editAppAuth();
+	
     $('._message_send').click(function(){
         hsp.composeMessage($('._message_text').val());
     });
