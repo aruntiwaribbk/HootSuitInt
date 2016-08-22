@@ -3,8 +3,8 @@ $(document).ready(function() {
 		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
 		 receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
         useTheme: true,
-        callBack: function (message) {
-                    alert('Got response from HootSuit');
+		 callBack: function (message) {
+                  
                     console.log('Error: ' + message);
                 }
     });
@@ -22,7 +22,7 @@ $(document).ready(function() {
     });
 
     $('._retweet').click(function(){
-		alert(1);
+		
         hsp.retweet('765781760890302465');
 		
     });
