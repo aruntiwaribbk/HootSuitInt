@@ -8,7 +8,7 @@ $(document).ready(function() {
                     console.log('Error: ' + message);
                 }
     });
-
+hsp.startAppTokenAuth();
     $('._message_send').click(function(){
         hsp.composeMessage($('._message_text').val());
     });
