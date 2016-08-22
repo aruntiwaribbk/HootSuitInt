@@ -32,7 +32,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			 hsp.retweet('+$('#hs_RetweetInputExample').val()+');
+			  hsp.retweet($('#hs_RetweetInputExample').val());
 		}
        
 		
