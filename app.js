@@ -8,7 +8,8 @@ $(document).ready(function() {
                     console.log('Error: ' + message);
                 }
     });
-hsp.startAppTokenAuth();
+	
+	hsp.editAppAuth();
     $('._message_send').click(function(){
         hsp.composeMessage($('._message_text').val());
     });
