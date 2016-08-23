@@ -48,6 +48,7 @@ $(document).ready(function() {
     });
 
     $('._showFollowDialog').click(function(){
+    	alert(1);
         hsp.showFollowDialog('Hootsuite', true);
     });
 
