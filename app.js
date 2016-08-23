@@ -53,23 +53,24 @@ $(document).ready(function() {
         hsp.showFollowDialog('Hootsuite', true);
     });
 
-     hsp.customUserInfo({
-          "fullName": "David Chan",
-          "screenName": "@chandavid",
+     $('._customUserInfo').click(function(){
+        hsp.customUserInfo({
+          "fullName": "arun",
+          "screenName": "@arun22755309",
           "avatar": "https://d1cmhiswqj5a7e.cloudfront.net/http%3A%2F%2Fplacehold.it%2F30x30%2F444",
-          "profileUrl": "http://twitter.com/chandavid",
-          "userLocation": "Vancouver, BC",
-          "bio": "JavaScript/web/martini developer. Working on @Hootsuite. Making by breaking.",
+          "profileUrl": "https://twitter.com/arun22755309",
+          "userLocation": "India",
+          "bio": ".Net Developer",
           "extra": [
             {"label": "Age", "value": "Unknown"},
             {"label": "Gender", "value": "Male"}
           ],
           "links": [
-            {"label": "Hootsuite", "url": "http://hootsuite.com"},
-            {"label": "Blog", "url": "http://blog.hootsuite.com"}
+            {"label": "Hootsuite", "url": "https://hootsuite.com"},
+            {"label": "Blog", "url": "https://blog.hootsuite.com"}
           ]
         });
-      });
+    });
 
     $('._showImagePreview').click(function(){
         hsp.showImagePreview( 
