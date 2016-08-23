@@ -1,7 +1,7 @@
 $(document).ready(function() {
     hsp.init({
-		// apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
-		// receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
+		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
+		 receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
         useTheme: true,
 		 callBack: function (message) {
                   
