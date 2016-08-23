@@ -24,9 +24,17 @@ $(document).ready(function() {
 
     $('._retweet').click(function(){
 		
-	
-			  hsp.retweet('767706782781366272');
-
+		if($('#hs_RetweetInputExample').val()=='')
+		{
+			
+			alert('Please enter tweet id you want to retweet.');
+			$('#hs_RetweetInputExample').focus();
+		}
+		else
+		{
+			 hsp.retweet($('#hs_RetweetInputExample').val());
+		}
+       
 		
     });
 
@@ -36,8 +44,7 @@ $(document).ready(function() {
 
     $('._getTwitterAccounts').click(function(){
         hsp.getTwitterAccounts(function(data){
-        	alert(data);
-           // log('gettwitteraccounts', data);
+            log('gettwitteraccounts', data);
         })
     });
 
@@ -53,7 +60,7 @@ $(document).ready(function() {
         hsp.showFollowDialog('Hootsuite', true);
     });
 
-     $('._customUserInfo').click(function(){
+    $('._customUserInfo').click(function(){
         hsp.customUserInfo({
           "fullName": "arun",
           "screenName": "@arun22755309",
@@ -98,22 +105,15 @@ $(document).ready(function() {
     hsp.bind('sendcomposedmsgtoapp', function(message){
         console.log('received composed message:', message);
     });
-hsp.bind('refresh', function() {
-
-    window.location.reload();
-});
-
 
     hsp.bind('dropuser', function(username, tweetId){
-    
-    		alert(tweetId);
-       $('.hs_topBar').after(messageTemplate({
-           input: 'user ' + username + ' dropped',
-           username: username,
-           avatar: 'http://avatars.io/twitter/' + username,
-           messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
-       }));
-   });
+        $('.hs_topBar').after(messageTemplate({
+            input: 'user ' + username + ' dropped',
+            username: username,
+            avatar: 'http://avatars.io/twitter/' + username,
+            messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
+        }));
+    });
 
     hsp.bind('sendtoapp', function(message){
         var userid = message.post.user.userid;
