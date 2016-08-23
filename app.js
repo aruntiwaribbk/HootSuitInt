@@ -105,7 +105,9 @@ $(document).ready(function() {
     hsp.bind('sendcomposedmsgtoapp', function(message){
         console.log('received composed message:', message);
     });
-
+hsp.bind('refresh', function() {
+    window.location.reload();
+});
     hsp.bind('dropuser', function(username, tweetId){
         $('.hs_topBar').after(messageTemplate({
             input: 'user ' + username + ' dropped',
