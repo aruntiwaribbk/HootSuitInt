@@ -108,14 +108,20 @@ $(document).ready(function() {
 hsp.bind('refresh', function() {
     window.location.reload();
 });
-    hsp.bind('dropuser', function(username, tweetId){
-        $('.hs_topBar').after(messageTemplate({
-            input: 'user ' + username + ' dropped',
-            username: username,
-            avatar: 'http://avatars.io/twitter/' + username,
-            messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
-        }));
-    });
+
+hsp.bind('dropuser', function(username, tweetID) {
+	alert(username);
+	alert(tweetID);
+    hsp.showUser(username);
+});
+  //  hsp.bind('dropuser', function(username, tweetId){
+   //     $('.hs_topBar').after(messageTemplate({
+    //        input: 'user ' + username + ' dropped',
+     //       username: username,
+     //       avatar: 'http://avatars.io/twitter/' + username,
+      //      messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
+      //  }));
+  //  });
 
     hsp.bind('sendtoapp', function(message){
         var userid = message.post.user.userid;
