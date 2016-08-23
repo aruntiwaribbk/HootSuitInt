@@ -24,17 +24,9 @@ $(document).ready(function() {
 
     $('._retweet').click(function(){
 		
-		if($('#hs_RetweetInputExample').val()=='')
-		{
-			
-			alert('Please enter tweet id you want to retweet.');
-			$('#hs_RetweetInputExample').focus();
-		}
-		else
-		{
-			  hsp.retweet($('#hs_RetweetInputExample').val());
-		}
-       
+	
+			  hsp.retweet('767706782781366272');
+
 		
     });
 
