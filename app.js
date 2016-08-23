@@ -106,14 +106,14 @@ $(document).ready(function() {
         console.log('received composed message:', message);
     });
 hsp.bind('refresh', function() {
-	alert(2);
+
     window.location.reload();
 });
 
 
     hsp.bind('dropuser', function(username, tweetId){
-    	alert(1);
-    		alert(username);
+    
+    		alert(tweetId);
        $('.hs_topBar').after(messageTemplate({
            input: 'user ' + username + ' dropped',
            username: username,
