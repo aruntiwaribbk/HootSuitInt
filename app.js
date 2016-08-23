@@ -36,7 +36,8 @@ $(document).ready(function() {
 
     $('._getTwitterAccounts').click(function(){
         hsp.getTwitterAccounts(function(data){
-            log('gettwitteraccounts', data);
+        	alert(data);
+           // log('gettwitteraccounts', data);
         })
     });
 
