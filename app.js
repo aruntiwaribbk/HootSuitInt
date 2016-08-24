@@ -27,6 +27,14 @@ $(document).ready(function() {
     });
 	
 	
+	hsp.getData(function(data)
+
+{
+console.log('App gets data', data);
+alert(data);
+});
+	
+	
     $('._message_send').click(function(){
 		alert('composeMessage');
         hsp.composeMessage($('._message_text').val());
