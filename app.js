@@ -109,7 +109,8 @@ $(document).ready(function() {
     hsp.bind('dropuser', function(username, tweetId){
 		alert(tweetId);
         $('.hs_topBar').after(messageTemplate({
-            input: 'user ' + username + ' dropped',
+            // input: 'user ' + username + ' dropped',
+			/ input: 'https://twitter.com/'+username+'/status/'+tweetId,
             username: username,
             avatar: 'http://avatars.io/twitter/' + username,
           //  messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
