@@ -11,44 +11,43 @@ $(document).ready(function() {
 	
 	
     $('._message_send').click(function(){
+		alert('composeMessage');
         hsp.composeMessage($('._message_text').val());
     });
 
     $('._user_search').click(function(){
+		alert('showUser');
         hsp.showUser($('._user_text').val());
     });
 
     $('._composeMessage').click(function(){
+		alert('composeMessage');
         hsp.composeMessage('- sending from the new Appdirecoty SDK');
     });
 
     $('._retweet').click(function(){
+		alert('retweet');
 		
-		if($('#hs_RetweetInputExample').val()=='')
-		{
-			
-			alert('Please enter tweet id you want to retweet.');
-			$('#hs_RetweetInputExample').focus();
-		}
-		else
-		{
 			 hsp.retweet($('#hs_RetweetInputExample').val());
-		}
-       
+		
 		
     });
 
     $('._showUser').click(function(){
+		alert('showUser');
         hsp.showUser('Hootsuite');
     });
 
     $('._getTwitterAccounts').click(function(){
+	
         hsp.getTwitterAccounts(function(data){
-            log('gettwitteraccounts', data);
+				alert('getTwitterAccounts');
+            //log('gettwitteraccounts', data);
         })
     });
 
     $('._showStatusMessage').click(function(){
+		alert('showStatusMessage');
         hsp.showStatusMessage('New Appdirectory SDK', 'INFO');
     });
 
@@ -103,6 +102,7 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendcomposedmsgtoapp', function(message){
+		alert('sendcomposedmsgtoapp');
         console.log('received composed message:', message);
     });
 
@@ -118,6 +118,7 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendtoapp', function(message){
+		alert('sendtoapp');
         var userid = message.post.user.userid;
         var username = message.post.user.username;
         var avatar;
@@ -137,7 +138,7 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendprofiletoapp', function(profile){
-
+alert('sendprofiletoapp')';
         if (profile.network == 'TWITTER') {
             avatar = 'http://avatars.io/twitter/' + profile.screen_name;
         } else {
@@ -153,6 +154,7 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendassignmentupdates', function(data){
+		alert('sendassignmentupdates');
         var $messageBox = $('._message_' + data.messageId);
         $messageBox.attr('assignmentId', data.assignmentId);
 
@@ -180,6 +182,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '._assign', function() {
+		alert('assignItem');
         var $messageBox = $(this).closest('._messageBox');
         var params = {
             messageId: $messageBox.attr('messageId'),
@@ -193,6 +196,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '._resolve', function() {
+		alert('resolveItem');
         var $messageBox = $(this).closest('._messageBox');
         if (!$messageBox.attr('assignmentId')) {
             alert('Please assign this ticket before resolving it.');
