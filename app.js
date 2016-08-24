@@ -1,21 +1,21 @@
 $(document).ready(function() {
-	alert(2);
+	// alert(2);
 	
-	var secret = 'sharedSecretABCD1234'; 
-var user_id   = GetQueryStringParams('i');
-var timestamp = GetQueryStringParams('ts');
-var token     = GetQueryStringParams('token');
-alert(1);
-alert(user_id);
-if (sha512(user_id,timestamp,secret) == token)
-{
-    alert('success');
-}
-else
-{
-	alert('failure');
+	// var secret = 'sharedSecretABCD1234'; 
+// var user_id   = GetQueryStringParams('i');
+// var timestamp = GetQueryStringParams('ts');
+// var token     = GetQueryStringParams('token');
+// alert(1);
+// alert(user_id);
+// if (sha512(user_id,timestamp,secret) == token)
+// {
+    // alert('success');
+// }
+// else
+// {
+	// alert('failure');
 	
-}
+// }
     hsp.init({
 		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
 		 receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
