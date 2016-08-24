@@ -109,6 +109,10 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendtoapp', function(message){
+    	alert(3);
+    	alert(message);
+    	alert(message.post.user.userid);
+    	alert(message.post.user.username);
         var userid = message.post.user.userid;
         var username = message.post.user.username;
         var avatar;
