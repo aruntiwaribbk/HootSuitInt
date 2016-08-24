@@ -11,38 +11,7 @@ $(document).ready(function() {
 	
 	
     $('._message_send').click(function(){
-    	
-    	alert(1);
-    	var message=$('._message_text').val();
-      hsp.bind('sendtoapp', function(message){
-      	alert(2);
-      	alert(message.post.user.userid)
-      	alert(message.post.user.username);
-      	alert(3);
-        var userid = message.post.user.userid;
-        var username = message.post.user.username;
-        var avatar;
-        if (message.post.network == 'twitter') {
-            avatar = 'http://avatars.io/twitter/' + username;
-        } else {
-            avatar = 'http://avatars.io/facebook/' + userid;
-        }
-        
-
-        $('.hs_topBar').after(messageTemplate({
-            input: message.post.content.body,
-            username: username,
-            avatar: avatar,
-            messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
-        }));
-    });	
-    	
-    	
-    	
-    	
-    	
-    	
-      //  hsp.composeMessage($('._message_text').val());
+        hsp.composeMessage($('._message_text').val());
     });
 
     $('._user_search').click(function(){
@@ -55,9 +24,18 @@ $(document).ready(function() {
 
     $('._retweet').click(function(){
 		
-	
+		if($('#hs_RetweetInputExample').val()=='')
+		{
+			
+			alert('Please enter tweet id you want to retweet.');
+			$('#hs_RetweetInputExample').focus();
+		}
+		else
+		{
 			 hsp.retweet($('#hs_RetweetInputExample').val());
-	
+		}
+       
+		
     });
 
     $('._showUser').click(function(){
@@ -66,8 +44,7 @@ $(document).ready(function() {
 
     $('._getTwitterAccounts').click(function(){
         hsp.getTwitterAccounts(function(data){
-        	alert(data);
-          //  log('gettwitteraccounts', data);
+            log('gettwitteraccounts', data);
         })
     });
 
@@ -80,7 +57,6 @@ $(document).ready(function() {
     });
 
     $('._showFollowDialog').click(function(){
-    	alert(1);
         hsp.showFollowDialog('Hootsuite', true);
     });
 
@@ -131,19 +107,17 @@ $(document).ready(function() {
     });
 
     hsp.bind('dropuser', function(username, tweetId){
+		alert(tweetId);
         $('.hs_topBar').after(messageTemplate({
             input: 'user ' + username + ' dropped',
             username: username,
             avatar: 'http://avatars.io/twitter/' + username,
-            messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
+          //  messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
+			 messageId: tweetId
         }));
     });
 
     hsp.bind('sendtoapp', function(message){
-    	alert(3);
-    	alert(message);
-    	alert(message.post.user.userid);
-    	alert(message.post.user.username);
         var userid = message.post.user.userid;
         var username = message.post.user.username;
         var avatar;
