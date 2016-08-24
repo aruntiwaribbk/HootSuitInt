@@ -12,9 +12,13 @@ $(document).ready(function() {
 	
     $('._message_send').click(function(){
     	
-    	
+    	alert(1);
     	var message=$('._message_text').val();
       hsp.bind('sendtoapp', function(message){
+      	alert(2);
+      	alert(message.post.user.userid)
+      	alert(message.post.user.username);
+      	alert(3);
         var userid = message.post.user.userid;
         var username = message.post.user.username;
         var avatar;
