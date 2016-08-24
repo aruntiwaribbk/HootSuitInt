@@ -145,6 +145,7 @@ alert(data);
 
     hsp.bind('sendcomposedmsgtoapp', function(message){
 		alert('sendcomposedmsgtoapp');
+		alert(message.post.user.userid);
         console.log('received composed message:', message);
     });
 
