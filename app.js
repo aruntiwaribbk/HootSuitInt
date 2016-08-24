@@ -138,7 +138,7 @@ $(document).ready(function() {
     });
 
     hsp.bind('sendprofiletoapp', function(profile){
-alert('sendprofiletoapp')';
+alert('sendprofiletoapp');
         if (profile.network == 'TWITTER') {
             avatar = 'http://avatars.io/twitter/' + profile.screen_name;
         } else {
