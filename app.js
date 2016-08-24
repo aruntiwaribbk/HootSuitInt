@@ -2,37 +2,37 @@ $(document).ready(function() {
 	// alert(2);
 	
 	
-	function getUrlVars()
-{
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
-}
+	// function getUrlVars()
+// {
+    // var vars = [], hash;
+    // var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    // for(var i = 0; i < hashes.length; i++)
+    // {
+        // hash = hashes[i].split('=');
+        // vars.push(hash[0]);
+        // vars[hash[0]] = hash[1];
+    // }
+    // return vars;
+// }
 	
 	
 	
 	
-	var secret = 'sharedSecretABCD1234'; 
- var user_id   =getUrlVars()["i"];// GetQueryStringParams('i');
- var timestamp =getUrlVars()["ts"]; //GetQueryStringParams('ts');
- var token     =getUrlVars()["token"];// GetQueryStringParams('token');
- alert(1);
- alert(user_id);
- if (sha512(user_id,timestamp,secret) == token)
- {
-    alert('success');
- }
- else
- {
-	 alert('failure');
+	// var secret = 'sharedSecretABCD1234'; 
+ // var user_id   =getUrlVars()["i"];// GetQueryStringParams('i');
+ // var timestamp =getUrlVars()["ts"]; //GetQueryStringParams('ts');
+ // var token     =getUrlVars()["token"];// GetQueryStringParams('token');
+ // alert(1);
+ // alert(user_id);
+ // if (sha512(user_id,timestamp,secret) == token)
+ // {
+    // alert('success');
+ // }
+ // else
+ // {
+	 // alert('failure');
 	
- }
+ // }
     hsp.init({
 		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
 		 receiverPath: 'https://hootuitintegration.herokuapp.com/my_receiver.html',
