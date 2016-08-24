@@ -11,7 +11,34 @@ $(document).ready(function() {
 	
 	
     $('._message_send').click(function(){
-        hsp.composeMessage($('._message_text').val());
+    	
+    	
+    	var message=$('._message_text').val();
+      hsp.bind('sendtoapp', function(message){
+        var userid = message.post.user.userid;
+        var username = message.post.user.username;
+        var avatar;
+        if (message.post.network == 'twitter') {
+            avatar = 'http://avatars.io/twitter/' + username;
+        } else {
+            avatar = 'http://avatars.io/facebook/' + userid;
+        }
+        
+
+        $('.hs_topBar').after(messageTemplate({
+            input: message.post.content.body,
+            username: username,
+            avatar: avatar,
+            messageId: parseInt(1000000*Math.random(), 10) //generate random message ID for demonstration purposes
+        }));
+    });	
+    	
+    	
+    	
+    	
+    	
+    	
+      //  hsp.composeMessage($('._message_text').val());
     });
 
     $('._user_search').click(function(){
