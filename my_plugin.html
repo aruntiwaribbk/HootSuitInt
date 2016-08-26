@@ -9,11 +9,15 @@
 <script>
 function sendToAppHandler(message) {
 alert('123');
+alert(message);
   var messageId = "messageId=" + encodeURIComponent(message.post.id);
   var datetime  = "&datetime=" + encodeURIComponent(message.post.datetime);
   var message   = "&message=" + encodeURIComponent(message.post.content.body);
   var handler = 'hootuitintegration.herokuapp.com/my_handler.html?' + messageId + datetime + message;
-
+alert(messageId);
+alert(datetime);
+alert(message);
+alert(handler);
   hsp.showCustomPopup(handler, 'App Plugin popup');
 }
 
