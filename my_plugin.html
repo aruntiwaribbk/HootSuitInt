@@ -27,7 +27,9 @@ hsp.init({
                     console.log('Error: ' + message);
                 }
     });
-	sendToAppHandler(message);
+	hsp.bind('sendtoapp', function(message){
+  sendToAppHandler(message);
+});
 
 });
 </script>
