@@ -1,34 +1,37 @@
-﻿<html>
-  <head>
-  
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Hootsuite Demo App</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
         <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js"></script>
-        
-  </head>
-  <body>
-    
-	<script>
-	function sendToAppHandler(message) {
-	alert(123);
+<script>
+function sendToAppHandler(message) {
+alert('123');
   var messageId = "messageId=" + encodeURIComponent(message.post.id);
   var datetime  = "&datetime=" + encodeURIComponent(message.post.datetime);
   var message   = "&message=" + encodeURIComponent(message.post.content.body);
-  var handler = 'https://hootuitintegration.herokuapp.com/my_handler.html?' + messageId + datetime + message;
+  var handler = 'hootuitintegration.herokuapp.com/my_handler.html?' + messageId + datetime + message;
+
   hsp.showCustomPopup(handler, 'App Plugin popup');
 }
-  $(document).ready(function() {
-    hsp.init({
-    apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
-				useTheme: true,
-				callBack: function (message) {
-					alert(1);
+
+$(document).ready(function() {
+hsp.init({
+		 apiKey: 'dixrr8363jswk0wowsgc80k0k3ie33dahak',
+		
+        useTheme: true,
+		 callBack: function (message) {
+                  alert('my plugin initialized');
                     console.log('Error: ' + message);
                 }
-				});
-				sendToAppHandler(message);
-  });
+    });
+	sendToAppHandler(message);
+
+});
 </script>
-  </body>
+    </head>
+
+    <body> </body>
 </html>
